@@ -1,13 +1,14 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import CardComponent from '../../components/CardComponent/CardComponent'
 import { Col, Pagination, Row } from 'antd'
 import { WrapperProducts, WrapperContainer } from './style'
 import { useLocation } from 'react-router-dom'
 import * as ProductService from '../../services/ProductService'
-import { useEffect, useState } from 'react'
 import Loading from '../../components/LoadingComponent/Loading'
 import { useSelector } from 'react-redux'
 import { useDebounce } from '../../hooks/useDebounce'
+import TypeProduct from '../../components/TypeProduct/TypeProduct'
+import { WrapperTypeProduct } from '../HomePage/style'
 
 const TypeProductPage = () => {
     const searchProduct = useSelector((state) => state?.product?.search)
@@ -16,12 +17,25 @@ const TypeProductPage = () => {
     const { state } = useLocation()
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
+    const [typeProducts, setTypeProducts] = useState([])   // ← THÊM
 
     const [panigate, setPanigate] = useState({
         page: 0,
-        limit: 9, // 👈 3x3 giống layout hình bạn
+        limit: 9,
         total: 1,
     })
+
+    // ← THÊM: fetch danh mục
+    const fetchAllTypeProduct = async () => {
+        const res = await ProductService.getAllTypeProduct()
+        if (res?.status === 'OK') {
+            setTypeProducts(res?.data)
+        }
+    }
+
+    useEffect(() => {
+        fetchAllTypeProduct()   // ← THÊM
+    }, [])
 
     const fetchProductType = async (type, page, limit) => {
         setLoading(true)
@@ -45,6 +59,18 @@ const TypeProductPage = () => {
 
     return (
         <Loading isLoading={loading}>
+
+            {/* ← THÊM: thanh danh mục */}
+            <div style={{ background: '#fff', borderBottom: '1px solid #eee' }}>
+                <div style={{ width: '1200px', margin: '0 auto' }}>
+                    <WrapperTypeProduct>
+                        {typeProducts.map((item) => (
+                            <TypeProduct name={item} key={item} />
+                        ))}
+                    </WrapperTypeProduct>
+                </div>
+            </div>
+
             <WrapperContainer>
                 <div className="container">
                     <Row justify="center">
@@ -55,33 +81,28 @@ const TypeProductPage = () => {
                                         if (searchDebounce === '') return pro
                                         if (pro?.name?.toLowerCase()?.includes(searchDebounce?.toLowerCase())) return pro
                                     })
-                                    ?.map((product) => {
-                                        return (
-                                            <CardComponent
-                                                key={product._id}
-                                                countInStock={product.countInStock}
-                                                description={product.description}
-                                                image={product.image}
-                                                name={product.name}
-                                                price={product.price}
-                                                rating={product.rating}
-                                                type={product.type}
-                                                selled={product.selled}
-                                                discount={product.discount}
-                                                id={product._id}
-                                            />
-                                        )
-                                    })}
+                                    ?.map((product) => (
+                                        <CardComponent
+                                            key={product._id}
+                                            countInStock={product.countInStock}
+                                            description={product.description}
+                                            image={product.image}
+                                            name={product.name}
+                                            price={product.price}
+                                            rating={product.rating}
+                                            type={product.type}
+                                            selled={product.selled}
+                                            discount={product.discount}
+                                            id={product._id}
+                                        />
+                                    ))}
                             </WrapperProducts>
 
                             <Pagination
                                 current={panigate.page + 1}
                                 total={panigate?.total * 10}
                                 onChange={onChange}
-                                style={{
-                                    textAlign: 'center',
-                                    marginTop: '30px'
-                                }}
+                                style={{ textAlign: 'center', marginTop: '30px' }}
                             />
                         </Col>
                     </Row>

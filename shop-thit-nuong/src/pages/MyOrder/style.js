@@ -1,4 +1,4 @@
-import styled  from "styled-components";
+import styled from "styled-components";
 
 export const WrapperStyleHeader = styled.div`
   background: rgb(255, 255, 255);
@@ -12,6 +12,7 @@ export const WrapperStyleHeader = styled.div`
     font-size: 13px;
   }
 `
+
 export const WrapperStyleHeaderDilivery = styled.div`
   background: rgb(255, 255, 255);
   padding: 9px 16px;
@@ -28,7 +29,9 @@ export const WrapperStyleHeaderDilivery = styled.div`
 
 export const WrapperContainer = styled.div`
   width: 100%;
-  background-color: #f5f5fa;
+  min-height: 100vh;
+  background-color: #f7f8fc;
+  padding: 32px 0;
 `
 
 export const WrapperLeft = styled.div`
@@ -38,46 +41,56 @@ export const WrapperLeft = styled.div`
 export const WrapperListOrder = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   padding-top: 20px;
+  padding-bottom: 40px;
 `
+
 export const WrapperFooterItem = styled.div`
   display: flex;
-  flex-direction : column;
-  gap: 10px;
-  border-top: 1px solid rgb(235, 235, 240);
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f0f0f0;
   width: 100%;
-  align-items:flex-end;
-  padding-top: 10px;
+  padding-top: 14px;
+  margin-top: 4px;
 `
 
 export const WrapperHeaderItem = styled.div`
   display: flex;
-  align-items:flex-start;
-  height: 90px;
+  align-items: center;
   width: 100%;
+  padding: 10px 0;
+  border-bottom: 1px solid #f9f9f9;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
 `
 
 export const WrapperItemOrder = styled.div`
   display: flex;
-  align-items: center;
-  padding: 9px 16px;
-  background: #fff;
-  margin-top: 12px;
   flex-direction: column;
-  width: 950px;
-  margin: 0 auto;
+  padding: 20px 24px;
   background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 12px 12px #ccc;
+  border-radius: 16px;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 6px 24px rgba(229, 57, 53, 0.08);
+  }
 `
 
 export const WrapperStatus = styled.div`
-  display:flex;
-  align-item:flex-start;
+  display: flex;
+  align-items: center;
+  gap: 24px;
   width: 100%;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgb(235, 235, 240);
-  flex-direction:column;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f0f0f0;
 `

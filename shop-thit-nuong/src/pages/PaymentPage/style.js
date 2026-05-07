@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const WrapperStyleHeader = styled.div`
   background: #ffffff;
   padding: 12px 18px;
-  border-radius: 10px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -18,6 +18,9 @@ export const WrapperStyleHeader = styled.div`
 
 export const WrapperLeft = styled.div`
   width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 `;
 
 export const WrapperListOrder = styled.div``;
@@ -28,7 +31,7 @@ export const WrapperItemOrder = styled.div`
   padding: 12px 18px;
   background: #fff;
   margin-top: 12px;
-  border-radius: 10px;
+  border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 `;
 
@@ -50,53 +53,89 @@ export const WrapperCountOrder = styled.div`
 
 export const WrapperRight = styled.div`
   width: 30%;
-  margin-left: 20px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
+  position: sticky;
+  top: 20px;
+  height: fit-content;
 `;
 
 export const WrapperInfo = styled.div`
-  padding: 16px 20px;
+  padding: 18px 22px;
   background: #fff;
-  border-radius: 10px;
+  border-radius: 14px;
   width: 100%;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1px solid #f0f0f0;
+
+  div {
+    margin-bottom: 8px;
+    &:last-child { margin-bottom: 0; }
+  }
 `;
 
 export const WrapperTotal = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 18px 20px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  align-items: center;
+  padding: 18px 22px;
+  background: linear-gradient(135deg, #fff5f5 0%, #fff9f0 100%);
+  border-radius: 14px;
+  border: 1.5px dashed #ffcdd2;
+  box-shadow: 0 2px 12px rgba(255,57,69,0.08);
 `;
 
 export const Lable = styled.span`
-  font-size: 13px;
-  color: #333;
-  font-weight: 600;
+  font-size: 14px;
+  color: #222;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 12px;
 `;
 
 export const WrapperRadio = styled(Radio.Group)`
-  margin-top: 10px;
-  background: #f9fbff;
-  border: 1px solid #d6e4ff;
   width: 100%;
-  border-radius: 10px;
-  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 
   .ant-radio-wrapper {
-    padding: 8px 10px;
-    border-radius: 6px;
-    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1.5px solid #f0f0f0;
+    background: #fafafa;
+    transition: all 0.2s;
+    margin: 0;
+    font-weight: 500;
+    font-size: 14px;
+    color: #333;
+
+    &:hover {
+      border-color: #ff3945;
+      background: #fff5f5;
+    }
   }
 
-  .ant-radio-wrapper:hover {
-    background: #e6f4ff;
+  .ant-radio-wrapper-checked {
+    border-color: #ff3945 !important;
+    background: #fff0f0 !important;
+    color: #ff3945;
   }
+`;
+
+export const MomoBadge = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #ae2070, #d82d8b);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-left: 8px;
+  letter-spacing: 0.3px;
 `;

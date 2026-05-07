@@ -2,7 +2,6 @@ import {Checkbox, Form } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { CustomCheckbox, WrapperCountOrder, WrapperInfo, WrapperItemOrder, WrapperLeft, WrapperListOrder, WrapperRight, WrapperStyleHeader, WrapperStyleHeaderDilivery, WrapperTotal } from './style';
 import { DeleteOutlined, MinusOutlined, PlusOutlined, ShoppingCartOutlined, CarOutlined } from '@ant-design/icons'
-
 import { WrapperInputNumber } from '../../components/ProductDetailsComponent/style';
 import ButtonComponent from '../../components/ButtonComponent/ButtonComponent';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +11,7 @@ import { useMemo } from 'react';
 import ModalComponent from '../../components/ModalComponent/ModalComponent';
 import InputComponent from '../../components/InputComponent/InputComponent';
 import { useMutationHooks } from '../../hooks/useMutationHook';
-import * as  UserService from '../../services/UserService'
+import * as UserService from '../../services/UserService'
 import Loading from '../../components/LoadingComponent/Loading';
 import * as message from '../../components/Message/Message'
 import { updateUser } from '../../redux/slides/userSlide';
@@ -26,10 +25,7 @@ const OrderPage = () => {
   const [listChecked, setListChecked] = useState([])
   const [isOpenModalUpdateInfo, setIsOpenModalUpdateInfo] = useState(false)
   const [stateUserDetails, setStateUserDetails] = useState({
-    name: '',
-    phone: '',
-    address: '',
-    city: ''
+    name: '', phone: '', address: '', city: ''
   })
   const navigate = useNavigate()
   const [form] = Form.useForm();
@@ -59,9 +55,7 @@ const OrderPage = () => {
   const handleOnchangeCheckAll = (e) => {
     if(e.target.checked) {
       const newListChecked = []
-      order?.orderItems?.forEach((item) => {
-        newListChecked.push(item?.product)
-      })
+      order?.orderItems?.forEach((item) => { newListChecked.push(item?.product) })
       setListChecked(newListChecked)
     }else {
       setListChecked([])
@@ -114,12 +108,10 @@ const OrderPage = () => {
     }
   }
 
-  const mutationUpdate = useMutationHooks(
-    (data) => {
-      const { id, token, ...rests } = data
-      return UserService.updateUser(id, { ...rests }, token)
-    },
-  )
+  const mutationUpdate = useMutationHooks((data) => {
+    const { id, token, ...rests } = data
+    return UserService.updateUser(id, { ...rests }, token)
+  })
 
   const {isLoading} = mutationUpdate
 
@@ -146,26 +138,35 @@ const OrderPage = () => {
   }
 
   return (
-    <div style={{ background: 'linear-gradient(160deg, #fff5f5 0%, #f5f5fa 100%)', width: '100%', minHeight: '100vh', paddingBottom: 40 }}>
-      <div style={{ maxWidth: '1270px', margin: '0 auto', padding: '0 16px' }}>
+    <div style={{ background: 'linear-gradient(160deg, #fff5f5 0%, #f5f5fa 100%)', width: '100%', minHeight: '100vh', paddingBottom: 60 }}>
+      <div style={{ maxWidth: '1270px', margin: '0 auto', padding: '0 20px' }}>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '24px 0 16px' }}>
-          <ShoppingCartOutlined style={{ fontSize: 24, color: '#ff3945' }} />
-          <h3 style={{ fontWeight: 700, fontSize: 22, margin: 0, color: '#1a1a1a', letterSpacing: '-0.5px' }}>
-            Giỏ hàng
-            <span style={{ marginLeft: 8, fontSize: 14, fontWeight: 500, color: '#999' }}>
-              ({order?.orderItems?.length} sản phẩm)
-            </span>
-          </h3>
+        {/* TIÊU ĐỀ */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '28px 0 18px' }}>
+          <div style={{
+            width: 44, height: 44, borderRadius: 12,
+            background: 'linear-gradient(135deg, #ff3945, #ff6b35)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 4px 12px rgba(255,57,69,0.3)'
+          }}>
+            <ShoppingCartOutlined style={{ fontSize: 22, color: '#fff' }} />
+          </div>
+          <div>
+            <h3 style={{ fontWeight: 800, fontSize: 22, margin: 0, color: '#1a1a1a' }}>Giỏ hàng</h3>
+            <span style={{ fontSize: 13, color: '#999' }}>{order?.orderItems?.length} sản phẩm trong giỏ</span>
+          </div>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'flex-start', gap: 16, alignItems: 'flex-start' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-start', gap: 20, alignItems: 'flex-start' }}>
           <WrapperLeft>
+
+            {/* BANNER VẬN CHUYỂN */}
             <WrapperStyleHeaderDilivery>
-              <CarOutlined style={{ fontSize: 16, color: '#e74c3c', marginRight: 8 }} />
+              <CarOutlined style={{ fontSize: 18, color: '#e67e22', marginRight: 10 }} />
               <span>🎉 Miễn phí vận chuyển cho đơn hàng từ <strong>500.000 VND</strong></span>
             </WrapperStyleHeaderDilivery>
 
+            {/* HEADER BẢNG */}
             <WrapperStyleHeader>
               <span style={{ display: 'inline-flex', alignItems: 'center', width: '390px', gap: 8 }}>
                 <CustomCheckbox onChange={handleOnchangeCheckAll} checked={listChecked?.length === order?.orderItems?.length} />
@@ -179,36 +180,37 @@ const OrderPage = () => {
               </div>
             </WrapperStyleHeader>
 
+            {/* DANH SÁCH SẢN PHẨM */}
             <WrapperListOrder>
               {order?.orderItems?.map((order) => (
                 <WrapperItemOrder key={order?.product}>
-                  <div style={{ width: '390px', display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <div style={{ width: '390px', display: 'flex', alignItems: 'center', gap: 14 }}>
                     <CustomCheckbox onChange={onChange} value={order?.product} checked={listChecked.includes(order?.product)} />
-                    <img src={order?.image} style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: 10 }} alt={order?.name} />
-                    <div style={{ width: 260, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontWeight: 500, fontSize: 14, color: '#222' }}>
+                    <img src={order?.image} style={{ width: '88px', height: '88px', objectFit: 'cover', borderRadius: 12 }} alt={order?.name} />
+                    <div style={{ width: 250, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontWeight: 600, fontSize: 14, color: '#222' }}>
                       {order?.name}
                     </div>
                   </div>
 
                   <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ fontSize: 14, color: '#ff3945', fontWeight: 600 }}>{convertPrice(order?.price)}</span>
+                    <span style={{ fontSize: 14, color: '#ff3945', fontWeight: 700 }}>{convertPrice(order?.price)}</span>
 
                     <WrapperCountOrder>
                       <button onClick={() => handleChangeCount('decrease', order?.product, order?.amount === 1)}>
-                        <MinusOutlined style={{ color: '#555', fontSize: 10 }} />
+                        <MinusOutlined style={{ color: '#ff3945', fontSize: 10 }} />
                       </button>
                       <WrapperInputNumber defaultValue={order?.amount} value={order?.amount} size="small" min={1} max={order?.countInstock} />
                       <button onClick={() => handleChangeCount('increase', order?.product, order?.amount === order.countInstock, order?.amount === 1)}>
-                        <PlusOutlined style={{ color: '#555', fontSize: 10 }} />
+                        <PlusOutlined style={{ color: '#ff3945', fontSize: 10 }} />
                       </button>
                     </WrapperCountOrder>
 
-                    <span style={{ color: '#ff3945', fontSize: 14, fontWeight: 700 }}>{convertPrice(order?.price * order?.amount)}</span>
+                    <span style={{ color: '#ff3945', fontSize: 15, fontWeight: 800 }}>{convertPrice(order?.price * order?.amount)}</span>
 
                     <DeleteOutlined
-                      style={{ cursor: 'pointer', color: '#ccc', fontSize: 16 }}
+                      style={{ cursor: 'pointer', color: '#ddd', fontSize: 18 }}
                       onMouseEnter={e => e.target.style.color = '#ff3945'}
-                      onMouseLeave={e => e.target.style.color = '#ccc'}
+                      onMouseLeave={e => e.target.style.color = '#ddd'}
                       onClick={() => handleDeleteOrder(order?.product)}
                     />
                   </div>
@@ -217,61 +219,76 @@ const OrderPage = () => {
             </WrapperListOrder>
           </WrapperLeft>
 
+          {/* PANEL THANH TOÁN */}
           <WrapperRight>
+
+            {/* ĐỊA CHỈ */}
             <WrapperInfo>
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                 <div>
-                  <span style={{ fontSize: 12, color: '#aaa', display: 'block', marginBottom: 2 }}>Giao đến</span>
+                  <span style={{ fontSize: 11, color: '#aaa', display: 'block', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    📍 Giao đến
+                  </span>
                   <span style={{ fontWeight: 600, fontSize: 13, color: '#222' }}>
                     {user?.address ? `${user?.address}, ${user?.city}` : 'Chưa có địa chỉ'}
                   </span>
                 </div>
-                <span onClick={handleChangeAddress} style={{ color: '#ff3945', cursor: 'pointer', fontSize: 12, fontWeight: 600, whiteSpace: 'nowrap', marginLeft: 8 }}>
+                <span
+                  onClick={handleChangeAddress}
+                  style={{
+                    color: '#ff3945', cursor: 'pointer', fontSize: 12, fontWeight: 700,
+                    whiteSpace: 'nowrap', marginLeft: 10, padding: '4px 10px',
+                    border: '1px solid #ffcdd2', borderRadius: 20, background: '#fff5f5'
+                  }}
+                >
                   Thay đổi
                 </span>
               </div>
             </WrapperInfo>
 
+            {/* GIÁ */}
             <WrapperInfo>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
                 <span style={{ color: '#666' }}>Tạm tính</span>
                 <span style={{ fontWeight: 600, color: '#222' }}>{convertPrice(priceMemo)}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
                 <span style={{ color: '#666' }}>Giảm giá</span>
                 <span style={{ fontWeight: 600, color: '#27ae60' }}>- {convertPrice(priceDiscountMemo)}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: '#666' }}>Phí giao hàng</span>
                 <span style={{ fontWeight: 600, color: diliveryPriceMemo === 0 ? '#27ae60' : '#222' }}>
-                  {diliveryPriceMemo === 0 ? 'Miễn phí' : convertPrice(diliveryPriceMemo)}
+                  {diliveryPriceMemo === 0 ? '🎁 Miễn phí' : convertPrice(diliveryPriceMemo)}
                 </span>
               </div>
             </WrapperInfo>
 
+            {/* TỔNG */}
             <WrapperTotal>
-              <span style={{ fontWeight: 600, fontSize: 15, color: '#333' }}>Tổng tiền</span>
+              <span style={{ fontWeight: 700, fontSize: 15, color: '#333' }}>Tổng tiền</span>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                <span style={{ color: '#ff3945', fontSize: 22, fontWeight: 800, letterSpacing: '-0.5px' }}>{convertPrice(totalPriceMemo)}</span>
-                <span style={{ color: '#aaa', fontSize: 11 }}>(Đã bao gồm VAT nếu có)</span>
+                <span style={{ color: '#ff3945', fontSize: 24, fontWeight: 800, letterSpacing: '-0.5px' }}>{convertPrice(totalPriceMemo)}</span>
+                <span style={{ color: '#bbb', fontSize: 11 }}>(Đã bao gồm VAT nếu có)</span>
               </div>
             </WrapperTotal>
 
+            {/* NÚT MUA */}
             <div style={{ padding: '16px 20px', width: '100%', background: '#fff' }}>
               <ButtonComponent
                 onClick={() => handleAddCard()}
                 size={40}
                 styleButton={{
                   background: 'linear-gradient(135deg, #ff3945, #ff6b35)',
-                  height: '48px',
-                  width: '100%',
-                  border: 'none',
-                  borderRadius: '12px',
-                  boxShadow: '0 4px 15px rgba(255,57,69,0.35)',
+                  height: '52px', width: '100%', border: 'none',
+                  borderRadius: '14px', boxShadow: '0 6px 20px rgba(255,57,69,0.4)',
                 }}
                 textbutton={'🛒  Mua hàng ngay'}
-                styleTextButton={{ color: '#fff', fontSize: '15px', fontWeight: '700' }}
+                styleTextButton={{ color: '#fff', fontSize: '16px', fontWeight: '700' }}
               />
+              <p style={{ textAlign: 'center', color: '#bbb', fontSize: 11, marginTop: 10, marginBottom: 0 }}>
+                🔒 Thanh toán an toàn & bảo mật
+              </p>
             </div>
           </WrapperRight>
         </div>

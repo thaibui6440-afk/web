@@ -6,32 +6,33 @@ const SliderComponent = ({ arrImages }) => {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 600,
+        speed: 700,
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 2500
+        autoplaySpeed: 3500,
+        pauseOnHover: true,
+        arrows: true,
     };
 
     return (
         <WrapperSliderStyle {...settings}>
-            {arrImages.map((image) => {
-                return (
-                    <div key={image} style={{ padding: '0 8px' }}>
-                        <Image
-                            src={image}
-                            alt="slider"
-                            preview={false}
-                            width="100%"
-                            height="300px"
-                            style={{
-                                objectFit: 'cover',
-                                borderRadius: '12px'
-                            }}
-                        />
-                    </div>
-                )
-            })}
+            {arrImages.map((image) => (
+                <div key={image}>
+                    <img
+                        src={image}
+                        alt="slider"
+                        style={{
+                            width: '100%',
+                            height: 'auto',
+                            aspectRatio: '16/5',
+                            objectFit: 'cover',
+                            borderRadius: '16px',
+                            display: 'block',
+                        }}
+                    />
+                </div>
+            ))}
         </WrapperSliderStyle>
     )
 }

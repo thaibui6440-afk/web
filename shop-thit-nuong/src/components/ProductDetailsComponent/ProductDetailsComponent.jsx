@@ -20,8 +20,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { addOrderProduct, resetOrder } from '../../redux/slides/orderSlide'
 import { convertPrice, initFacebookSDK } from '../../utils'
 import * as message from '../Message/Message'
-import LikeButtonComponent from '../LikeButtonComponent/LikeButtonComponent'
-import CommentComponent from '../CommentComponent/CommentComponent'
+
+
 
 const ProductDetailsComponent = ({ idProduct }) => {
   const [numProduct, setNumProduct] = useState(1)
@@ -160,13 +160,8 @@ const ProductDetailsComponent = ({ idProduct }) => {
               <span className="change-address"> Đổi địa chỉ</span>
             </WrapperAddressProduct>
 
-            <LikeButtonComponent
-              dataHref={
-                process.env.REACT_APP_IS_LOCAL
-                  ? "https://developers.facebook.com/docs/plugins/"
-                  : window.location.href
-              }
-            />
+            
+            
 
             {/* QUANTITY */}
             <div style={{ margin: '20px 0' }}>
@@ -223,14 +218,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
             )}
           </Col>
 
-          <CommentComponent
-            dataHref={
-              process.env.REACT_APP_IS_LOCAL
-                ? "https://developers.facebook.com/docs/plugins/comments#configurator"
-                : window.location.href
-            }
-            width="1200"
-          />
+          
         </Row>
       </div>
     </Loading>

@@ -30,9 +30,8 @@ const sendEmailCreateOrder = async (email,orderItems) => {
   let info = await transporter.sendMail({
     from: process.env.MAIL_ACCOUNT, // sender address
     to: email, // list of receivers
-    subject: "Bạn đã đặt hàng tại shop LẬP trình thật dễ", // Subject line
-    text: "Hello world?", // plain text body
-    html: `<div><b>Bạn đã đặt hàng thành công tại shop Lập trình thật dễ</b></div> ${listItem}`,
+    subject: "Bạn đã đặt hàng thành công tại Shop Thịt Nướng",
+    html: `<div><b>Bạn đã đặt hàng thành công tại Shop Thịt Nướng</b></div> ${listItem}`,
     attachments: attachImage,
   });
 }
